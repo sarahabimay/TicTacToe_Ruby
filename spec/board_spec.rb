@@ -11,7 +11,7 @@ class BoardTest
       end
 
       it "places a mark in a given position" do
-        @my_three_by_three_board.play_mark_in_position(Mark::X, 4)
+        new_board = @my_three_by_three_board.play_mark_in_position(Mark::X, 4)
         expect(@my_three_by_three_board.find_mark_in_position(4)).to eq(Mark::X)
       end
 
@@ -53,6 +53,11 @@ class BoardTest
       context "finding win, draw or neither" do
         it "is not game over" do
           expect( @my_three_by_three_board.is_game_over?()).to eq(false)
+        end
+
+        it "is game over as no spaces left" do
+          full_board = Board.new(3, [[Mark::X, Mark::O, Mark::O], [Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X]]) 
+          expect( full_board.spaces_available?()).to eq(false)
         end
 
         it "game over with win in column 1" do

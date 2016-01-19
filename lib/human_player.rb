@@ -1,7 +1,8 @@
-require_relative "mark.rb"
+require_relative "mark"
 
 class HumanPlayer
   attr_reader :mark
+
   def initialize(mark)
     @mark = mark
   end
