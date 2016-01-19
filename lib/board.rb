@@ -2,7 +2,7 @@ require 'enumerator'
 require "mark"
 
 class Board 
-  attr_reader :board_size
+  attr_reader :board_size, :board_cells
 
   X_POSITION_2D = 0
   Y_POSITION_2D = 1
@@ -12,7 +12,7 @@ class Board
   def initialize(dimension, board_cells = [])
     @dimension = dimension 
     @board_size = @dimension * @dimension
-    @board = create_board_cells(board_cells)
+    @board_cells = create_board_cells(board_cells)
   end
 
   def create_board_cells(board_cells)
@@ -27,9 +27,10 @@ class Board
   def play_mark_in_position(mark, position_key)
     raise ArgumentError, "Invalid Board Position" if !valid_position?(position_key)
     raise ArgumentError, "Position Already Taken" if position_occupied?(position_key)
-    flattened = @board.flatten
-    flattened[position_key] = mark
-    @board = flattened.each_slice(@dimension).to_a
+    flattened = @board_cells.flatten
+    flattened[position_key - ZERO_INDEX_OFFSET] = mark
+    @board_cells = flattened.each_slice(@dimension).to_a
+    Board.new(@dimension, @board_cells)
   end
 
   def valid_position?(position_key)
@@ -43,20 +44,29 @@ class Board
   end
 
   def find_mark_in_position(position_key)
-    flattened = @board.flatten
-    flattened[position_key]
+    flattened = @board_cells.flatten
+    flattened[position_key - ZERO_INDEX_OFFSET]
   end
 
   def next_mark_to_play
-    return Mark::X if number_of_positions_for_mark(Mark::X) < number_of_positions_for_mark(Mark::O)
-    Mark::O
+    return Mark::O if number_of_positions_for_mark(Mark::O) < number_of_positions_for_mark(Mark::X)
+    Mark::X
   end
 
   def number_of_positions_for_mark(mark)
-    flat_board = @board.flatten
+    flat_board = @board_cells.flatten
     flat_board.find_all { |x| x == mark }.size
   end
-  def is_game_over?()
+
+  def is_game_over?
+    !spaces_available? || found_win  
+  end
+
+  def spaces_available?
+    number_of_positions_for_mark(Mark::X) + number_of_positions_for_mark(Mark::O) != @board_size 
+  end
+
+  def found_win
     found_win_in_columns || found_win_in_rows || found_win_in_diagonals
   end
 
@@ -65,11 +75,11 @@ class Board
   end
   
   def find_column_win_for_mark(mark)
-    find_row_win_for_mark(mark, @board.transpose)
+    find_row_win_for_mark(mark, @board_cells.transpose)
   end
 
   def found_win_in_rows
-    find_row_win_for_mark(Mark::X, @board) || find_row_win_for_mark(Mark::O, @board)
+    find_row_win_for_mark(Mark::X, @board_cells) || find_row_win_for_mark(Mark::O, @board_cells)
   end
 
   def find_row_win_for_mark(mark, board)
@@ -84,7 +94,7 @@ class Board
     diagonal_coordinates = get_diagonal_coordinates
     result = diagonal_coordinates.collect do |group| 
       group.all? do |coords| 
-        @board[coords[X_POSITION_2D]][coords[Y_POSITION_2D]] == mark 
+        @board_cells[coords[X_POSITION_2D]][coords[Y_POSITION_2D]] == mark 
       end
     end
     result.any? { |found| found == true }
