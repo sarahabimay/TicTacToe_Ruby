@@ -1,8 +1,9 @@
 class Game
-  attr_reader :players
+  attr_reader :players, :game_type
 
-  def initialize(board, *players)
+  def initialize(board, game_type, players)
     @board = board
+    @game_type = game_type
     @players = create_player_list(players)
   end
 
