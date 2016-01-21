@@ -3,14 +3,22 @@ require "rspec"
 
 class HumanPlayerTest
   describe HumanPlayer do
+    let(:display) { ConsoleDisplay.new($stdin, $stdout) }
+    let(:human) { HumanPlayer.new(Mark::X, display) }
+    let(:board) { Board.new(3) }
+
     it "create player with X mark" do
-      human_player = HumanPlayer.new(Mark::X)
-      expect(human_player.mark).to eq(Mark::X)
+      expect(human.mark).to eq(Mark::X)
     end
 
     it "knows who it's opponent is" do
-      human_player = HumanPlayer.new(Mark::X)
-      expect(human_player.get_opponent).to eq(Mark::O)
+      human_player = HumanPlayer.new(Mark::X, display)
+      expect(human.get_opponent).to eq(Mark::O)
+    end
+
+    it "gets next position from console" do
+      allow(STDIN).to receive(:gets) { 1 }
+      expect(human.get_next_move(board)).to eq(1)
     end
   end
 end

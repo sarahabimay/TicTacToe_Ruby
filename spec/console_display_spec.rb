@@ -1,8 +1,6 @@
 require_relative "../lib/console_display"
 require_relative "../lib/board"
 require "rspec"
-require "stringio"
-
 
 class ConsoleDisplayTest
   describe ConsoleDisplay do
@@ -10,7 +8,6 @@ class ConsoleDisplayTest
     
     it "asks user for a move" do
       expect(STDOUT).to receive(:puts).with("Please choose a position Player X:\n")
-      #allow(STDIN).to receive(:gets) { Mark::X }
       console_display.ask_player_for_move(Board.new(3))
     end
 

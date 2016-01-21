@@ -1,8 +1,8 @@
 class PlayerFactory
   attr_reader :players
 
-  def initialize
-    @players = [HumanPlayer.new(Mark::X), HumanPlayer.new(Mark::O)]
+  def initialize(display)
+    @players = [HumanPlayer.new(Mark::X, display), HumanPlayer.new(Mark::O, display)]
   end
 
 end

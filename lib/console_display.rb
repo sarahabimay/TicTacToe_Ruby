@@ -24,8 +24,6 @@ class ConsoleDisplay
   end
 
   def display_result(mark)
-    p mark
-
     if !mark.nil?
       announce_winner(mark)
     else 
@@ -46,6 +44,5 @@ class ConsoleDisplay
       row.join("|")
     end
     formatted = formatted.join("\n")
-    p formatted
   end
 end
