@@ -1,4 +1,4 @@
-require_relative "mark"
+require "mark"
 
 class HumanPlayer
   attr_reader :mark

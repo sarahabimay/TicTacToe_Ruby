@@ -1,4 +1,4 @@
-require_relative "../lib/game_maker"
+require "game_maker"
 
 class GameMakerTest
   DIMENSION_THREE = 3

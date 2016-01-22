@@ -1,4 +1,4 @@
-require_relative "../lib/human_player"
+require "human_player"
 
 class HumanPlayerFake < HumanPlayer
   def set_dummy_moves(moves)
