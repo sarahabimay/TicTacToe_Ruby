@@ -2,8 +2,6 @@ require "game"
 require "human_player_fake"
 require "console_board_displayer"
 
-require "pry-byebug"
-
 RSpec.describe Game do
   let(:input) { StringIO.new }
   let(:output) { StringIO.new }

@@ -20,14 +20,5 @@ RSpec.describe HumanPlayer do
   it "gets next position from console" do
     expect(human.get_next_move).to eq("1")
   end
-
-  xit "gets an invalid position from console and retries" do
-    invalid_input = double("inputter")
-    allow(invalid_input).to receive(:gets).and_return("99", 1)
-    display = ConsoleDisplay.new(invalid_input, output)
-    bad_human = HumanPlayer.new(Mark::X, display)
-    board = Board.new(BoardOptions::THREE_BY_THREE)
-    expect(bad_human.get_next_move).to eq(1)
-  end
 end
 
