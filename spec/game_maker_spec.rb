@@ -1,14 +1,18 @@
 require "game_maker"
+require "stringio"
 
-class GameMakerTest
-  DIMENSION_THREE = 3
-  HUMAN_HUMAN_OPTION = "HVH"
+RSpec.describe GameMaker do
+  let(:input) { StringIO.new }
+  let(:output) { StringIO.new }
 
-  describe GameMaker do
-    it "creates a game with 3x3 Board and HVH players" do
-      game_maker = GameMaker.new(PlayerFactory.new(ConsoleDisplay.new($stdin, $stdout)))
-      game = game_maker.create_game(DIMENSION_THREE, HUMAN_HUMAN_OPTION)
-      expect(game).to be_a(Game)
+  it "creates a game with 3x3 Board and HVH players" do
+    game_maker = GameMaker.new(PlayerFactory.new(ConsoleDisplay.new(input, output)))
+    game = game_maker.create_game(BoardOptions::THREE, GameType::HVH)
+    expect(game).to be_a(Game)
+    players = game.players
+    expect(players.size).to eq(2)
+    players.each do |player|
+      expect(player[1]).to be_a(HumanPlayer)
     end
   end
 end

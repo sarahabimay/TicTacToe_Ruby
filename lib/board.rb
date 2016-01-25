@@ -28,7 +28,7 @@ class Board
     raise ArgumentError, "Invalid Board Position" if !valid_position?(position_key)
     raise ArgumentError, "Position Already Taken" if position_occupied?(position_key)
     flattened = @board_cells.flatten
-    flattened[position_key - ZERO_INDEX_OFFSET] = mark
+    flattened[position_key.to_i - ZERO_INDEX_OFFSET] = mark
     @board_cells = flattened.each_slice(@dimension).to_a
     Board.new(@dimension, @board_cells)
   end
@@ -40,12 +40,12 @@ class Board
   end
 
   def position_occupied?(position_key)
-    Mark.is_a_mark?(find_mark_in_position(position_key))
+    Mark.is_a_mark?(find_mark_in_position(position_key.to_i))
   end
 
   def find_mark_in_position(position_key)
     flattened = @board_cells.flatten
-    flattened[position_key - ZERO_INDEX_OFFSET]
+    flattened[position_key.to_i - ZERO_INDEX_OFFSET]
   end
 
   def next_mark_to_play

@@ -18,7 +18,7 @@ class Game
   def play_turns
     while !@board.is_game_over? do
       next_player = find_player_by_mark(@board.next_mark_to_play)
-      next_position = next_player.get_next_position
+      next_position = next_player.get_next_move(@board)
       @board = @board.play_mark_in_position(next_player.mark, next_position)
     end
     @board
