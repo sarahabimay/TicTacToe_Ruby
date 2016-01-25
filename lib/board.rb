@@ -58,12 +58,23 @@ class Board
     flat_board.find_all { |x| x == mark }.size
   end
 
+  def get_winning_mark
+    return nil if !is_game_over?
+    return Mark::X if found_win_for_mark(Mark::X)
+    return Mark::O if found_win_for_mark(Mark::O)
+    return nil
+  end
+
   def is_game_over?
     !spaces_available? || found_win  
   end
 
   def spaces_available?
     number_of_positions_for_mark(Mark::X) + number_of_positions_for_mark(Mark::O) != @board_size 
+  end
+
+  def found_win_for_mark(mark)
+    find_column_win_for_mark(mark) || find_row_win_for_mark(mark, @board_cells) || find_diagonal_win_for_mark(mark)
   end
 
   def found_win
