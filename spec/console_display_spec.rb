@@ -1,22 +1,16 @@
 require "console_display"
 require "board"
+require "board_options"
 require "stringio"
 
 RSpec.describe ConsoleDisplay do
-  REQUEST_BOARD_DIMENSION = "Please choose board dimension: 3x3(3).\n"
-  REQUEST_GAME_TYPE = "Please choose game type: Human vs Human(1).\n"
-  NEW_MOVE_REQUEST = "Please choose a position"
-  PLAY_A_GAME_REQUEST = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2)?\n"
-  WINNING_ANNOUNCEMENT = "We have a winner:"
-  DRAW_ANNOUNCEMENT = "The game is a draw!\n"
-
   let(:input) { StringIO.new("1") }
   let(:output) { StringIO.new }
   let(:console_display) { ConsoleDisplay.new(input, output) }
 
   it "request board size from player" do
     console_display.ask_player_for_board_dimension
-    expect(output.string).to eq(REQUEST_BOARD_DIMENSION)
+    expect(output.string).to eq(ConsoleDisplay::REQUEST_BOARD_DIMENSION)
   end
 
   it "gets board size from player" do
@@ -27,7 +21,7 @@ RSpec.describe ConsoleDisplay do
 
   it "request game type from player" do
     console_display.ask_player_for_game_type
-    expect(output.string).to eq(REQUEST_GAME_TYPE)
+    expect(output.string).to eq(ConsoleDisplay::REQUEST_GAME_TYPE)
   end
 
   it "request game type from player" do
@@ -37,8 +31,8 @@ RSpec.describe ConsoleDisplay do
   end
 
   it "asks user for a move" do
-    console_display.ask_player_for_move(Board.new(3))
-    expect(output.string).to eq("#{NEW_MOVE_REQUEST} Player X:\n")
+    console_display.ask_player_for_move(Mark::X)
+    expect(output.string).to eq("#{ConsoleDisplay::NEW_MOVE_REQUEST} Player X:\n")
   end
 
   it "gets a move from user" do
@@ -49,17 +43,17 @@ RSpec.describe ConsoleDisplay do
 
   it "displays winner announcement" do
     console_display.display_result(Mark::X)
-    expect(output.string).to eq("#{WINNING_ANNOUNCEMENT} Player X!\n")
+    expect(output.string).to eq("#{ConsoleDisplay::WINNING_ANOUNCEMENT} Player X!\n")
   end
 
   it "displays draw announcement" do
     console_display.display_result(nil)
-    expect(output.string).to eq(DRAW_ANNOUNCEMENT)
+    expect(output.string).to eq(ConsoleDisplay::DRAW_ANNOUNCEMENT)
   end
 
   it "asks user if they want to play again" do
     console_display.ask_player_to_play_again
-    expect(output.string).to eq(PLAY_A_GAME_REQUEST)
+    expect(output.string).to eq(ConsoleDisplay::PLAY_AGAIN_REQUEST)
   end
 
   it "gets user's play again choice as Yes" do
@@ -82,13 +76,13 @@ RSpec.describe ConsoleDisplay do
   end
 
   it "displays TTT board on the console" do
-    board = Board.new(3, [[Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X],[Mark::O, Mark::X, Mark::O]])
+    board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X],[Mark::O, Mark::X, Mark::O]])
     console_display.display_board(board)
     expect(output.string).to eq("X|O|X\nX|O|X\nO|X|O\n")
   end
 
   it "formats board" do
-    board = Board.new(3, [[Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X],[Mark::O, Mark::X, Mark::O]])
+    board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X],[Mark::O, Mark::X, Mark::O]])
     results = console_display.format_board_for_display(board)
     expect(results).to eq("X|O|X\nX|O|X\nO|X|O")
   end
