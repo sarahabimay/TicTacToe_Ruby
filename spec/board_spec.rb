@@ -1,7 +1,7 @@
 require "board"
 
 RSpec.describe Board do
-  let!(:each) { @my_three_by_three_board = Board.new(3) }
+  let!(:each) { @my_three_by_three_board = Board.new(BoardOptions::THREE_BY_THREE) }
 
   context "Three by Three Board" do 
     it "creates a Board instance representing a 3x3 game" do
@@ -33,18 +33,18 @@ RSpec.describe Board do
     end
 
     it "is unable to place a Mark in a position already taken" do
-      board_with_some_positions = Board.new(3, [[Mark::X, Mark::X, Mark::O], [Mark::O, Mark::O, 6], [7, 8, 9]])
+      board_with_some_positions = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::X, Mark::O], [Mark::O, Mark::O, 6], [7, 8, 9]])
       expect{board_with_some_positions.play_mark_in_position(Mark::X, 3)}.
         to raise_error(ArgumentError, "Position Already Taken")
     end
 
     it "knows Mark::X is the next Mark to be played" do
-      board_with_some_positions = Board.new(3, [[Mark::X, Mark::X, Mark::O], [Mark::O, Mark::O, 6], [7, 8, 9]])
+      board_with_some_positions = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::X, Mark::O], [Mark::O, Mark::O, 6], [7, 8, 9]])
       expect(board_with_some_positions.next_mark_to_play).to eq(Mark::X)
     end
 
     it "knows Mark::O is the next Mark to be played" do
-      board_with_some_positions = Board.new(3, [[Mark::X, Mark::X, Mark::X], [Mark::O, Mark::O, 6], [7, 8, 9]])
+      board_with_some_positions = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::X, Mark::X], [Mark::O, Mark::O, 6], [7, 8, 9]])
       expect(board_with_some_positions.next_mark_to_play).to eq(Mark::O)
     end
 
@@ -54,33 +54,43 @@ RSpec.describe Board do
       end
 
       it "is game over as no spaces left" do
-        full_board = Board.new(3, [[Mark::X, Mark::O, Mark::O], [Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X]]) 
+        full_board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::O, Mark::O], [Mark::X, Mark::O, Mark::X],[Mark::X, Mark::O, Mark::X]]) 
         expect( full_board.spaces_available?()).to eq(false)
       end
 
       it "game over with win in column 1" do
-        column_win_board = Board.new(3, [[Mark::X, "2", "3"], [Mark::X, "5", "6"],[Mark::X, "8", "9"]]) 
+        column_win_board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, "2", "3"], [Mark::X, "5", "6"],[Mark::X, "8", "9"]]) 
         expect( column_win_board.is_game_over?()).to eq(true)
       end
 
       it "game over with win in column 2" do
-        column_win_board = Board.new(3, [["1", Mark::X, "3"], ["4", Mark::X, "6"],["7", Mark::X, "9"]]) 
+        column_win_board = Board.new(BoardOptions::THREE_BY_THREE, [["1", Mark::X, "3"], ["4", Mark::X, "6"],["7", Mark::X, "9"]]) 
         expect( column_win_board.is_game_over?()).to eq(true)
       end
 
       it "game over with win in row 1" do
-        row_win_board = Board.new(3, [[Mark::X, Mark::X, Mark::X], ["4", "5", "6"],["7", "8", "9"]]) 
+        row_win_board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::X, Mark::X], ["4", "5", "6"],["7", "8", "9"]]) 
         expect( row_win_board.is_game_over?()).to eq(true)
       end
 
       it "game over with win in row 3" do
-        row_win_board = Board.new(3, [["1", "2", "3"], ["4", "5", "6"],[Mark::X, Mark::X, Mark::X]]) 
+        row_win_board = Board.new(BoardOptions::THREE_BY_THREE, [["1", "2", "3"], ["4", "5", "6"],[Mark::X, Mark::X, Mark::X]]) 
         expect( row_win_board.is_game_over?()).to eq(true)
       end
 
       it "game over with win in diagonal 1" do
-        diag_win_board = Board.new(3, [[Mark::X, "2", "3"], ["4", Mark::X, "6"],["7", "8", Mark::X]]) 
+        diag_win_board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, "2", "3"], ["4", Mark::X, "6"],["7", "8", Mark::X]]) 
         expect( diag_win_board.is_game_over?()).to eq(true)
+      end
+
+      it "find winning player is Mark::X" do
+        x_win_board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, "2", "3"], ["4", Mark::X, "6"],["7", "8", Mark::X]]) 
+        expect( x_win_board.get_winning_mark).to eq(Mark::X)
+      end
+
+      it "find no winning player" do
+        x_win_board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::O, "2", "3"], ["4", Mark::X, "6"],["7", "8", Mark::X]]) 
+        expect( x_win_board.get_winning_mark).to eq(nil)
       end
     end
   end
