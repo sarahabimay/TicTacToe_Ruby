@@ -1,7 +1,6 @@
 require "human_player"
 
 class PlayerFactory
-
   attr_reader :players
   
   def initialize(display)
