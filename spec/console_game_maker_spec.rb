@@ -2,10 +2,10 @@ require "console_game_maker"
 require "stringio"
 
 RSpec.describe ConsoleGameMaker do
-  let(:input) { StringIO.new }
-  let(:output) { StringIO.new }
 
   it "creates a game with 3x3 Board and HVH players" do
+    input = StringIO.new
+    output = StringIO.new
     console_display = ConsoleDisplay.new(input, output)
     game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_display), ConsoleBoardDisplayer.new(console_display))
     game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameType::HVH)

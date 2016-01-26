@@ -3,15 +3,12 @@ require "human_player_fake"
 require "console_board_displayer"
 
 RSpec.describe Game do
-  let(:input) { StringIO.new }
-  let(:output) { StringIO.new }
-  let(:display) { ConsoleDisplay.new(input, output) }
   let(:board_displayer_spy) { instance_spy(ConsoleBoardDisplayer) }
   let(:player1_fake) { instance_spy(HumanPlayer) }
   let(:player2_fake) { instance_spy(HumanPlayer) }
-  let(:game) { Game.new(Board.new(BoardOptions::THREE_BY_THREE), GameType::HVH, board_displayer_spy, [player1_fake, player2_fake]) } 
 
   it "game has two players" do
+    game = Game.new(Board.new(BoardOptions::THREE_BY_THREE), GameType::HVH, board_displayer_spy, [player1_fake, player2_fake]) 
     expect(game.players.length).to eq(2)
   end
   
