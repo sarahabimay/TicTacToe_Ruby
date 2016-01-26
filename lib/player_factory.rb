@@ -11,9 +11,11 @@ class PlayerFactory
   def get_players_for_game_type(game_type)
     case game_type
     when GameType::HVH
-      @players = [HumanPlayer.new(Mark::X, @display), HumanPlayer.new(Mark::O, @display)]
+      players = [HumanPlayer.new(Mark::X, display), HumanPlayer.new(Mark::O, display)]
     end
-    @players
+    players
   end
   
+  private
+  attr_reader :display
 end

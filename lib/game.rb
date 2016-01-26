@@ -9,7 +9,7 @@ class Game
   end
 
   def create_player_list(players)
-    @players = Hash[players.collect { |player| [player.mark, player] } ] 
+    players = Hash[players.collect { |player| [player.mark, player] } ] 
   end
 
   def get_winning_mark
@@ -17,7 +17,7 @@ class Game
   end
 
   def find_player_by_mark(mark)
-    return @players[mark] if @players.has_key?(mark)
+    return players[mark] if players.has_key?(mark)
   end
 
   def play_turns
@@ -38,6 +38,9 @@ class Game
   end
 
   def display_board
-    @board_displayer.display_board(@board)
+    board_displayer.display_board(@board)
   end
+
+  private
+  attr_reader :board_displayer, :board
 end

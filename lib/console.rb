@@ -6,7 +6,6 @@ class Console
   def initialize(game_maker, console_display)
     @game_maker = game_maker
     @console_display = console_display
-    @game = nil
   end
 
   def game_type
@@ -30,17 +29,17 @@ class Console
   end
 
   def get_valid_game_type
-    type = @console_display.ask_player_for_game_type until GameType.is_valid_game_type?(type)
+    type = console_display.ask_player_for_game_type until GameType.is_valid_game_type?(type)
     type
   end
 
   def get_valid_dimension
-      dimension = @console_display.ask_player_for_board_dimension until BoardOptions.is_valid_dimension?(dimension)
+      dimension = console_display.ask_player_for_board_dimension until BoardOptions.is_valid_dimension?(dimension)
       dimension
   end
 
   def create_new_game_from_options(dimension_choice, game_type_choice)
-    @game = @game_maker.create_game(dimension_choice, game_type_choice)
+    @game = game_maker.create_game(dimension_choice, game_type_choice)
   end
 
   def play
@@ -48,13 +47,16 @@ class Console
   end
 
   def display_result
-    @console_display.display_result(@game.get_winning_mark)
+    console_display.display_result(@game.get_winning_mark)
   end
 
   def player_wants_to_play_again?
-    choice = @console_display.ask_player_to_play_again until YN.is_valid_choice?(choice)
+    choice = console_display.ask_player_to_play_again until YN.is_valid_choice?(choice)
     
     return true if choice == YN::Y 
     return false if choice == YN::N 
   end
+  
+  private
+  attr_reader :game, :game_maker, :console_display
 end
