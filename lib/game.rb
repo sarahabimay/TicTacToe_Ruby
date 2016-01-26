@@ -5,11 +5,7 @@ class Game
     @board = board
     @game_type = game_type
     @board_displayer = board_displayer
-    @players = create_player_list(players)
-  end
-
-  def create_player_list(players)
-    players = Hash[players.collect { |player| [player.mark, player] } ] 
+    @players = players
   end
 
   def get_winning_mark
@@ -34,7 +30,7 @@ class Game
 
   def play_next_move
     next_player = find_player_by_mark(@board.next_mark_to_play)
-    @board = @board.play_mark_in_position(next_player.mark, next_player.get_next_move)
+    @board = @board.play_mark_in_position(@board.next_mark_to_play, next_player.get_next_move)
   end
 
   def display_board
