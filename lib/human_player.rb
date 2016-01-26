@@ -13,7 +13,7 @@ class HumanPlayer
     Mark::O if @mark == Mark::X 
   end
 
-  def get_next_move(board)
-    @display.ask_player_for_move(board)
+  def get_next_move
+    @display.ask_player_for_move(@mark)
   end
 end

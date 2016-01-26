@@ -18,7 +18,7 @@ RSpec.describe HumanPlayer do
   end
 
   it "gets next position from console" do
-    expect(human.get_next_move(board)).to eq("1")
+    expect(human.get_next_move).to eq("1")
   end
 end
 
