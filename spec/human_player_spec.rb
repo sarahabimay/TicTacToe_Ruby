@@ -2,17 +2,14 @@ require "human_player"
 require "stringio"
 
 RSpec.describe HumanPlayer do
-  let(:input) { StringIO.new("1") }
-  let(:output) { StringIO.new }
-  let(:display) { ConsoleDisplay.new(input, output) }
-  let(:human) { HumanPlayer.new(Mark::X, display) }
-  let(:board) { Board.new(3) }
+  let(:human) { HumanPlayer.new(Mark::X, ConsoleDisplay.new(StringIO.new("1"), StringIO.new)) }
 
   it "create player with X mark" do
     expect(human.mark).to eq(Mark::X)
   end
 
   it "knows who it's opponent is" do
+    display = ConsoleDisplay.new(StringIO.new("1"), StringIO.new)
     human_player = HumanPlayer.new(Mark::X, display)
     expect(human.get_opponent).to eq(Mark::O)
   end

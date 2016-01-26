@@ -4,9 +4,8 @@ require "board_options"
 require "stringio"
 
 RSpec.describe ConsoleDisplay do
-  let(:input) { StringIO.new("1") }
   let(:output) { StringIO.new }
-  let(:console_display) { ConsoleDisplay.new(input, output) }
+  let(:console_display) { ConsoleDisplay.new(StringIO.new("1"), output) }
 
   it "request board size from player" do
     console_display.ask_player_for_board_dimension

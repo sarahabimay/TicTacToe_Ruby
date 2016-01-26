@@ -2,9 +2,7 @@ require "player_factory"
 require "stringio"
 
 RSpec.describe PlayerFactory do
-  let(:input) { StringIO.new }
-  let(:output) { StringIO.new }
-  let(:display) { ConsoleDisplay.new(input, output) }
+  let(:display) { ConsoleDisplay.new(StringIO.new, StringIO.new) }
 
   it "creates a list of two players" do
     factory = PlayerFactory.new(display)
