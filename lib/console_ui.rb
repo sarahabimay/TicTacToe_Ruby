@@ -1,4 +1,4 @@
-class ConsoleDisplay
+class ConsoleUI
   REQUEST_GAME_TYPE = "Please choose game type: Human vs Human(1).\n"
   REQUEST_BOARD_DIMENSION = "Please choose board dimension: 3x3(3).\n"
   NEW_MOVE_REQUEST = "Please choose a position"
@@ -6,9 +6,9 @@ class ConsoleDisplay
   WINNING_ANOUNCEMENT = "We have a winner:"
   DRAW_ANNOUNCEMENT = "The game is a draw!\n"
 
-  def initialize(std_in, std_out)
-    @input_stream = std_in
-    @output_stream = std_out
+  def initialize(input, output)
+    @input_stream = input
+    @output_stream = output
   end
 
   def ask_player_for_board_dimension

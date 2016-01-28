@@ -1,10 +1,10 @@
 class Game
   attr_reader :players, :game_type
 
-  def initialize(board, game_type, board_displayer, players)
+  def initialize(board, game_type, console_ui, players)
     @board = board
     @game_type = game_type
-    @board_displayer = board_displayer
+    @console_ui = console_ui
     @players = players
   end
 
@@ -19,12 +19,13 @@ class Game
   def play_turns
     while !@board.is_game_over? do
       begin
+        display_board
         play_next_move
-        display_board 
       rescue ArgumentError  => error
         p "#{error.class} and #{error.message}"
       end
     end
+    display_board
     @board
   end
 
@@ -34,9 +35,9 @@ class Game
   end
 
   def display_board
-    board_displayer.display_board(@board)
+    console_ui.display_board(@board)
   end
 
   private
-  attr_reader :board_displayer, :board
+  attr_reader :console_ui, :board
 end

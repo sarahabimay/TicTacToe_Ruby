@@ -32,7 +32,7 @@ PLATFORMS
 
 DEPENDENCIES
   pry-byebug
-  rspec
+  rspec (= 3.4.0)
 
 BUNDLED WITH
    1.11.2

@@ -1,33 +1,33 @@
 require "board"
 
 RSpec.describe Board do
-  let!(:each) { @my_three_by_three_board = Board.new(BoardOptions::THREE_BY_THREE) }
+  let(:my_three_by_three_board) { Board.new(BoardOptions::THREE_BY_THREE) }
 
   context "Three by Three Board" do 
     it "creates a Board instance representing a 3x3 game" do
-      expect(@my_three_by_three_board.board_size()).to eq(9)
+      expect(my_three_by_three_board.board_size()).to eq(9)
     end
 
     it "places a mark in a given position" do
-      new_board = @my_three_by_three_board.play_mark_in_position(Mark::X, 4)
-      expect(@my_three_by_three_board.find_mark_in_position(4)).to eq(Mark::X)
+      new_board = my_three_by_three_board.play_mark_in_position(Mark::X, 4)
+      expect(my_three_by_three_board.find_mark_in_position(4)).to eq(Mark::X)
     end
 
     [0, 10, "10"].each do |position|
       it "validates to false for position #{position}" do
-        expect(@my_three_by_three_board.valid_position?(position)).to eq(false)
+        expect(my_three_by_three_board.valid_position?(position)).to eq(false)
       end
     end
 
     [1, 9, "1"].each do |position|
       it "correctly validates to true if a position exist #{position}" do
-        expect(@my_three_by_three_board.valid_position?(position)).to eq(true)
+        expect(my_three_by_three_board.valid_position?(position)).to eq(true)
       end
     end
 
     [0, 10].each do |position|
       it "raises an 'InvalidMove' error when trying to place mark in position: #{position}" do
-        expect { @my_three_by_three_board.play_mark_in_position(Mark::X, position) }.
+        expect { my_three_by_three_board.play_mark_in_position(Mark::X, position) }.
           to raise_error(ArgumentError, "Invalid Board Position")
       end
     end
@@ -50,7 +50,7 @@ RSpec.describe Board do
 
     context "finding win, draw or neither" do
       it "is not game over" do
-        expect( @my_three_by_three_board.is_game_over?()).to eq(false)
+        expect( my_three_by_three_board.is_game_over?()).to eq(false)
       end
 
       it "is game over as no spaces left" do

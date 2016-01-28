@@ -6,8 +6,8 @@ RSpec.describe ConsoleGameMaker do
   it "creates a game with 3x3 Board and HVH players" do
     input = StringIO.new
     output = StringIO.new
-    console_display = ConsoleDisplay.new(input, output)
-    game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_display), ConsoleBoardDisplayer.new(console_display))
+    console_ui = ConsoleUI.new(input, output)
+    game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_ui), console_ui)
     game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameType::HVH)
     expect(game).to be_a(Game)
     players = game.players
@@ -19,9 +19,9 @@ RSpec.describe ConsoleGameMaker do
   end
 
   it "creates a game and gets a move from each player"  do
-    console_display_spy = instance_spy(ConsoleDisplay)
-    expect(console_display_spy).to receive(:ask_player_for_move).and_return(1, 2)
-    game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_display_spy), ConsoleBoardDisplayer.new(console_display_spy))
+    console_ui_spy = instance_spy(ConsoleUI)
+    expect(console_ui_spy).to receive(:ask_player_for_move).and_return(1, 2)
+    game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_ui_spy), console_ui_spy)
     game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameType::HVH)
     players = game.players
     players.each do |player|
