@@ -5,6 +5,7 @@ class ConsoleUI
   PLAY_AGAIN_REQUEST = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2)?\n"
   WINNING_ANOUNCEMENT = "We have a winner:"
   DRAW_ANNOUNCEMENT = "The game is a draw!\n"
+  OFFSET_FOR_DISPLAY = 1
 
   def initialize(input, output)
     @input_stream = input
@@ -48,10 +49,29 @@ class ConsoleUI
   end
 
   def format_board_for_display(board)
-    formatted = board.board_cells.collect do |row|
-      row.join("|")
+    formatted = format_board_cells(board)
+    add_new_line_to_each_row(add_column_divider(formatted))
+  end
+
+  def format_board_cells(board)
+    board.board_cells.flatten.collect.with_index do |cell, index|
+      format_cells_for_display(cell, index)
     end
-    formatted = formatted.join("\n")
+  end
+
+  def add_column_divider(board)
+    board.each_slice(3).collect { |row| row.join("|") }
+  end
+
+  def add_new_line_to_each_row(board)
+    board.join("\n")
+  end
+
+  def format_cells_for_display(cell, index)
+    if cell.nil?
+      cell = index + OFFSET_FOR_DISPLAY
+    end
+    cell.to_s
   end
 
   private
