@@ -4,8 +4,6 @@ require "mark"
 class Board 
   attr_reader :board_size, :board_cells
 
-  X_POSITION_2D = 0
-  Y_POSITION_2D = 1
   ZERO_INDEX_OFFSET = 1
   LOWER_INDEX_LIMIT = 1
 
@@ -20,7 +18,7 @@ class Board
       board_cells
     else
       position = 0
-      Array.new(@dimension) { Array.new(@dimension) { position += ZERO_INDEX_OFFSET; position.to_s } }
+      Array.new(@dimension) { Array.new(@dimension) }
     end
   end
 
@@ -104,8 +102,8 @@ class Board
   def find_diagonal_win_for_mark(mark)
     diagonal_coordinates = get_diagonal_coordinates
     result = diagonal_coordinates.collect do |group| 
-      group.all? do |coords| 
-        @board_cells[coords[X_POSITION_2D]][coords[Y_POSITION_2D]] == mark 
+      group.all? do |two_dimensional_coords| 
+        @board_cells[two_dimensional_coords.first][two_dimensional_coords.last] == mark 
       end
     end
     result.any? { |found| found == true }
