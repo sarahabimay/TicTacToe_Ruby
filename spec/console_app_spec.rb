@@ -1,14 +1,14 @@
-require "console"
+require "console_app"
 require "stringio"
 
-RSpec.describe Console do
+RSpec.describe ConsoleApp do
   let(:game_factory_spy) { instance_spy(ConsoleGameMaker)}
   let(:game_spy) { instance_spy(Game) }
   let(:board_spy) { instance_spy(Board) }
-  let(:display_spy) { instance_spy(ConsoleDisplay) }
+  let(:display_spy) { instance_spy(ConsoleUI) }
   let(:player1_spy) { instance_spy(HumanPlayer) }
   let(:player2_spy) { instance_spy(HumanPlayer) }
-  let(:console) { Console.new(game_factory_spy, display_spy) }
+  let(:console) { ConsoleApp.new(game_factory_spy, display_spy) }
 
   it "initialize a 3x3, HVH game" do
     allow(game_factory_spy).to receive(:create_game).and_return(game_spy)
@@ -62,11 +62,10 @@ RSpec.describe Console do
   end
 
   it "winning game results displayed" do 
-    board_displayer_spy = instance_spy(ConsoleBoardDisplayer)
     board = Board.new(3, [[Mark::X, Mark::X, Mark::O], [Mark::O, Mark::X, Mark::O], [Mark::O, Mark::X, 9]])
-    hvh_3x3_game = Game.new(board, GameType::HVH, board_displayer_spy, [player1_spy, player2_spy])
+    hvh_3x3_game = Game.new(board, GameType::HVH, display_spy, [player1_spy, player2_spy])
     expect(game_factory_spy).to receive(:create_game).and_return(hvh_3x3_game)
-    console = Console.new(game_factory_spy, display_spy) 
+    console = ConsoleApp.new(game_factory_spy, display_spy) 
     expect(display_spy).to receive(:ask_player_for_game_type).and_return("1")
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return("3")
     expect(display_spy).to receive(:ask_player_to_play_again).and_return(YN::N) 
@@ -77,11 +76,10 @@ RSpec.describe Console do
   end
 
   it "draw results displayed" do 
-    board_displayer_spy = instance_spy(ConsoleBoardDisplayer)
     board = Board.new(BoardOptions::THREE_BY_THREE, [[Mark::X, Mark::O, Mark::X], [Mark::O, Mark::O, Mark::X], [Mark::X, Mark::X, Mark::O]])
-    hvh_3x3_game = Game.new(board, GameType::HVH, board_displayer_spy, [player1_spy, player2_spy])
+    hvh_3x3_game = Game.new(board, GameType::HVH, display_spy, [player1_spy, player2_spy])
     expect(game_factory_spy).to receive(:create_game).and_return(hvh_3x3_game)
-    console = Console.new(game_factory_spy, display_spy) 
+    console = ConsoleApp.new(game_factory_spy, display_spy) 
     expect(display_spy).to receive(:ask_player_for_game_type).and_return("1")
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return("3")
     expect(display_spy).to receive(:ask_player_to_play_again).and_return(YN::N) 
