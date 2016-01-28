@@ -8,7 +8,7 @@ RSpec.describe ConsoleGameMaker do
     output = StringIO.new
     console_ui = ConsoleUI.new(input, output)
     game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_ui), console_ui)
-    game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameType::HVH)
+    game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameTypeOptions::HVH)
     expect(game).to be_a(Game)
     players = game.players
     expect(players.size).to eq(2)
@@ -22,7 +22,7 @@ RSpec.describe ConsoleGameMaker do
     console_ui_spy = instance_spy(ConsoleUI)
     expect(console_ui_spy).to receive(:ask_player_for_move).and_return(1, 2)
     game_maker = ConsoleGameMaker.new(PlayerFactory.new(console_ui_spy), console_ui_spy)
-    game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameType::HVH)
+    game = game_maker.create_game(BoardOptions::THREE_BY_THREE, GameTypeOptions::HVH)
     players = game.players
     players.each do |player|
       expect(player[1].get_next_move).to be_a(Fixnum)

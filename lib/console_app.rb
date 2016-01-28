@@ -1,5 +1,5 @@
 require "yn"
-require "game_type"
+require "game_type_options"
 require "board_options"
 
 class ConsoleApp
@@ -29,7 +29,7 @@ class ConsoleApp
   end
 
   def get_valid_game_type
-    type = console_ui.ask_player_for_game_type until GameType.is_valid_game_type?(type)
+    type = console_ui.ask_player_for_game_type until GameTypeOptions.is_valid_game_type?(type)
     type
   end
 
