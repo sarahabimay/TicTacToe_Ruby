@@ -1,5 +1,5 @@
 require "yn"
-require "game_type"
+require "game_type_options"
 require "board_options"
 
 class ConsoleApp
@@ -29,7 +29,7 @@ class ConsoleApp
   end
 
   def get_valid_game_type
-    type = console_ui.ask_player_for_game_type until GameType.is_valid_game_type?(type)
+    type = console_ui.ask_player_for_game_type until GameTypeOptions.is_valid_game_type?(type)
     type
   end
 
@@ -52,11 +52,11 @@ class ConsoleApp
 
   def player_wants_to_play_again?
     choice = console_ui.ask_player_to_play_again until YN.is_valid_choice?(choice)
-    
     return true if choice == YN::Y 
     return false if choice == YN::N 
   end
   
   private
+
   attr_reader :game, :game_maker, :console_ui
 end

@@ -7,19 +7,15 @@ class Board
   ZERO_INDEX_OFFSET = 1
   LOWER_INDEX_LIMIT = 1
 
-  def initialize(dimension, board_cells = [])
+  def initialize(dimension, cells = [])
     @dimension = dimension 
     @board_size = @dimension * @dimension
-    @board_cells = create_board_cells(board_cells)
+    @board_cells = create_board_cells(cells)
   end
 
-  def create_board_cells(board_cells)
-    if !board_cells.nil? && board_cells.flatten.length > 0
-      board_cells
-    else
-      position = 0
-      Array.new(@dimension) { Array.new(@dimension) }
-    end
+  def create_board_cells(cells)
+    return cells if !cells.nil? && cells.flatten.length > 0
+    Array.new(@dimension) { Array.new(@dimension) }
   end
 
   def play_mark_in_position(mark, position_key)

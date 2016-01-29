@@ -1,10 +1,11 @@
 require "console_ui"
+require "game_type_options"
 require "board"
 require "board_options"
 require "stringio"
 
 RSpec.describe ConsoleUI do
-  REQUEST_GAME_TYPE = "Please choose game type: Human vs Human(1).\n"
+  REQUEST_GAME_TYPE = "Please choose game type:"
   REQUEST_BOARD_DIMENSION = "Please choose board dimension: 3x3(3).\n"
   NEW_MOVE_REQUEST = "Please choose a position"
   PLAY_AGAIN_REQUEST = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2)?\n"
@@ -27,12 +28,12 @@ RSpec.describe ConsoleUI do
 
   it "request game type from player" do
     console_ui.ask_player_for_game_type
-    expect(output.string).to eq(REQUEST_GAME_TYPE)
+    expect(output.string).to eq("#{REQUEST_GAME_TYPE}\n#{HVH_OPTION} ; #{HVB_OPTION} ; #{BVH_OPTION}\n")
   end
 
   it "request game type from player" do
-    hvh_game = StringIO.new("1") 
-    console = ConsoleUI.new(hvh_game, output)
+    hvh_game_input = StringIO.new("1") 
+    console = ConsoleUI.new(hvh_game_input, output)
     expect(console.ask_player_for_game_type).to eq("1") 
   end
 
@@ -45,6 +46,11 @@ RSpec.describe ConsoleUI do
     move_input = StringIO.new("1") 
     console = ConsoleUI.new(move_input, output)
     expect(console.ask_player_for_move(Board.new(3))).to eq("1") 
+  end
+
+  it "displays user move to console" do
+    console_ui.announce_player_move(Mark::X, "1")
+    expect(output.string).to eq("Player: X has selected: 1\n")
   end
 
   it "displays winner announcement" do

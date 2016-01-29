@@ -1,10 +1,12 @@
+require "game_type_options"
+
 class ConsoleUI
-  REQUEST_GAME_TYPE = "Please choose game type: Human vs Human(1).\n"
-  REQUEST_BOARD_DIMENSION = "Please choose board dimension: 3x3(3).\n"
+  REQUEST_GAME_TYPE = "Please choose game type:"
+  REQUEST_BOARD_DIMENSION = "Please choose board dimension: 3x3(3)."
   NEW_MOVE_REQUEST = "Please choose a position"
-  PLAY_AGAIN_REQUEST = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2)?\n"
-  WINNING_ANOUNCEMENT = "We have a winner:"
-  DRAW_ANNOUNCEMENT = "The game is a draw!\n"
+  PLAY_AGAIN_REQUEST = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2)?"
+  WINNING_ANOUNCEMENT = "We have a winner: Player"
+  DRAW_ANNOUNCEMENT = "The game is a draw!"
   OFFSET_FOR_DISPLAY = 1
 
   def initialize(input, output)
@@ -18,12 +20,12 @@ class ConsoleUI
   end
 
   def ask_player_for_game_type
-    output_stream.puts REQUEST_GAME_TYPE;
+    output_stream.puts "#{REQUEST_GAME_TYPE}\n#{GameTypeOptions.for_display}";
     input_stream.gets.chomp
   end
 
   def ask_player_for_move(next_mark)
-    output_stream.puts "#{NEW_MOVE_REQUEST} Player #{next_mark}:\n"  
+    output_stream.puts "#{NEW_MOVE_REQUEST} Player #{next_mark}:"  
     input_stream.gets.chomp
   end
 
@@ -33,15 +35,19 @@ class ConsoleUI
   end
 
   def display_board(board)
-    output_stream.puts "#{format_board_for_display(board)}\n" 
+    output_stream.puts "#{format_board_for_display(board)}" 
   end
 
   def display_result(mark)
     !mark.nil? ? announce_winner(mark) : announce_draw
   end
 
+  def announce_player_move(mark, move)
+    output_stream.puts "Player: #{mark} has selected: #{move}"
+  end
+
   def announce_winner(mark)
-    output_stream.puts "#{WINNING_ANOUNCEMENT} Player #{mark}!\n"
+    output_stream.puts "#{WINNING_ANOUNCEMENT} #{mark}!"
   end
 
   def announce_draw
@@ -75,5 +81,6 @@ class ConsoleUI
   end
 
   private
+
   attr_reader :input_stream, :output_stream
 end

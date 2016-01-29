@@ -1,9 +1,7 @@
-require "mark"
 require "player"
 
-class HumanPlayer
+class BeatableAIPlayer
   include Player
- # attr_reader :mark
 
   def initialize(mark, display)
     @mark = mark
@@ -11,10 +9,12 @@ class HumanPlayer
   end
 
   def get_next_move
-    display.ask_player_for_move(mark)
+    move = rand(1..9)
+    display.announce_player_move(mark, move)
+    move
   end
 
   private
 
-  attr_reader :display, :mark
+  attr_reader :mark, :display
 end
