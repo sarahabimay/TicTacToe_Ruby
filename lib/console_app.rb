@@ -52,11 +52,11 @@ class ConsoleApp
 
   def player_wants_to_play_again?
     choice = console_ui.ask_player_to_play_again until YN.is_valid_choice?(choice)
-    
     return true if choice == YN::Y 
     return false if choice == YN::N 
   end
   
   private
+
   attr_reader :game, :game_maker, :console_ui
 end

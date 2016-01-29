@@ -14,5 +14,7 @@ class BeatableAIPlayer
     move
   end
 
+  private
+
   attr_reader :mark, :display
 end

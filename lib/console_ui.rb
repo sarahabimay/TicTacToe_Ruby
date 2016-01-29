@@ -81,5 +81,6 @@ class ConsoleUI
   end
 
   private
+
   attr_reader :input_stream, :output_stream
 end

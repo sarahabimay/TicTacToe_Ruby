@@ -39,5 +39,6 @@ class Game
   end
 
   private
+
   attr_reader :console_ui, :board
 end

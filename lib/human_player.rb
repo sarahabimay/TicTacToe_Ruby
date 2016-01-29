@@ -3,7 +3,7 @@ require "player"
 
 class HumanPlayer
   include Player
-  attr_reader :mark
+ # attr_reader :mark
 
   def initialize(mark, display)
     @mark = mark
@@ -15,5 +15,6 @@ class HumanPlayer
   end
 
   private
-  attr_reader :display
+
+  attr_reader :display, :mark
 end

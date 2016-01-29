@@ -9,7 +9,7 @@ RSpec.describe GameTypeOptions do
     expect(GameTypeOptions.for_display).to eq("#{HVH_OPTION} ; #{HVB_OPTION} ; #{BVH_OPTION}")
   end
 
-  [1, "1", 2, "2", GameTypeOptions::HVH, GameTypeOptions::HVB, GameTypeOptions::BVH].map do |type| 
+  [1, 2, 3, GameTypeOptions::HVH, GameTypeOptions::HVB, GameTypeOptions::BVH].map do |type| 
     it "finds #{type} is valid" do
       expect(GameTypeOptions.is_valid_game_type?(type)).to eq(true) 
     end

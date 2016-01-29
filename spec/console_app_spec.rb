@@ -39,14 +39,26 @@ RSpec.describe ConsoleApp do
     console.initialize_game
   end
 
-  [GameTypeOptions::HVH, GameTypeOptions::BVH, GameTypeOptions::HVB].map do |game_type|
-    it "user provides valid game type: #{game_type} and board size: 3" do
-      expect(display_spy).to receive(:ask_player_for_game_type).and_return(game_type)
+    it "user provides valid game type: #{GameTypeOptions::HVH} and board size: 3" do
+      expect(display_spy).to receive(:ask_player_for_game_type).and_return(GameTypeOptions::HVH)
       expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(BoardOptions::THREE_BY_THREE)
-      expect(game_factory_spy).to receive(:create_game).with(BoardOptions::THREE_BY_THREE, game_type).and_return(game_spy)
+      expect(game_factory_spy).to receive(:create_game).with(BoardOptions::THREE_BY_THREE, GameTypeOptions::HVH).and_return(game_spy)
       console.initialize_game
     end
-  end
+
+    it "user provides valid game type: #{GameTypeOptions::BVH} and board size: 3" do
+      expect(display_spy).to receive(:ask_player_for_game_type).and_return(GameTypeOptions::BVH)
+      expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(BoardOptions::THREE_BY_THREE)
+      expect(game_factory_spy).to receive(:create_game).with(BoardOptions::THREE_BY_THREE, GameTypeOptions::BVH).and_return(game_spy)
+      console.initialize_game
+    end
+
+    it "user provides valid game type: #{GameTypeOptions::HVB} and board size: 3" do
+      expect(display_spy).to receive(:ask_player_for_game_type).and_return(GameTypeOptions::HVB)
+      expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(BoardOptions::THREE_BY_THREE)
+      expect(game_factory_spy).to receive(:create_game).with(BoardOptions::THREE_BY_THREE, GameTypeOptions::HVB).and_return(game_spy)
+      console.initialize_game
+    end
 
   it "user wants to replay" do
     expect(display_spy).to receive(:ask_player_to_play_again).and_return(YN::Y) 

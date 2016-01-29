@@ -14,7 +14,7 @@ RSpec.describe ConsoleGameMaker do
     expect(players.size).to eq(2)
     players.each do |player|
       expect(player[1]).to be_a(HumanPlayer)
-      expect(Mark::is_a_mark?(player[1].mark)).to eq(true)
+      expect(Mark::is_a_mark?(player[0])).to eq(true)
     end
   end
 
