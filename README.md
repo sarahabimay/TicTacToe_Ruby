@@ -1,6 +1,6 @@
 # TicTacToe_Ruby
 
-* download and install my tictactoe Gem found here: [https://github.com/sarahabimay/TicTacToe_Gem.git](TicTacToe_GEM)
+* download and install my tictactoe Gem found here: [TicTacToe_GEM](https://github.com/sarahabimay/TicTacToe_Gem.git)
 * git clone the repo for TicTacToe_Ruby
 * > bundle install (to install Gemfile dependencies)
 * navigate to TTT_RUBY directory
