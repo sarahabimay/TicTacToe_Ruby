@@ -1,6 +1,6 @@
-require "yn"
-require "game_type_options"
-require "board_options"
+require "tictactoe/yn"
+require "tictactoe/game_type_options"
+require "tictactoe/board_options"
 
 class ConsoleApp
   def initialize(game_maker, console_ui)
@@ -29,12 +29,12 @@ class ConsoleApp
   end
 
   def get_valid_game_type
-    type = console_ui.ask_player_for_game_type until GameTypeOptions.is_valid_game_type?(type)
+    type = console_ui.ask_player_for_game_type until TicTacToe::GameTypeOptions.is_valid_game_type?(type)
     type
   end
 
   def get_valid_dimension
-      dimension = console_ui.ask_player_for_board_dimension until BoardOptions.is_valid_dimension?(dimension)
+      dimension = console_ui.ask_player_for_board_dimension until TicTacToe::BoardOptions.is_valid_dimension?(dimension)
       dimension
   end
 
@@ -51,9 +51,9 @@ class ConsoleApp
   end
 
   def player_wants_to_play_again?
-    choice = console_ui.ask_player_to_play_again until YN.is_valid_choice?(choice)
-    return true if choice == YN::Y 
-    return false if choice == YN::N 
+    choice = console_ui.ask_player_to_play_again until TicTacToe::YN.is_valid_choice?(choice)
+    return true if choice == TicTacToe::YN::Y 
+    return false if choice == TicTacToe::YN::N 
   end
   
   private
