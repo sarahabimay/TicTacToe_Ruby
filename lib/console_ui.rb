@@ -1,4 +1,4 @@
-require "game_type_options"
+require "tictactoe/game_type_options"
 
 class ConsoleUI
   REQUEST_GAME_TYPE = "Please choose game type:"
@@ -20,7 +20,7 @@ class ConsoleUI
   end
 
   def ask_player_for_game_type
-    output_stream.puts "#{REQUEST_GAME_TYPE}\n#{GameTypeOptions.for_display}";
+    output_stream.puts "#{REQUEST_GAME_TYPE}\n#{TicTacToe::GameTypeOptions.for_display}";
     input_stream.gets.chomp
   end
 
