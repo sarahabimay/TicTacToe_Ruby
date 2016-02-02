@@ -9,54 +9,57 @@ RSpec.describe ConsoleApp do
   let(:player1_spy) { instance_spy(TicTacToe::HumanPlayer) }
   let(:player2_spy) { instance_spy(TicTacToe::HumanPlayer) }
   let(:console) { ConsoleApp.new(game_factory_spy, display_spy) }
+  HVH = 1 
+  HVB = 2 
+  BVH = 3 
 
   it "initialize a 3x3, HVH game" do
     allow(game_factory_spy).to receive(:create_game).and_return(game_spy)
     expect(game_factory_spy).to receive(:create_game).and_return(game_spy)
-    expect(game_spy).to receive(:game_type).and_return(TicTacToe::GameTypeOptions::HVH)
-    game = console.create_new_game_from_options(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::HVH)
-    expect(console.game_type).to eq(TicTacToe::GameTypeOptions::HVH)
+    expect(game_spy).to receive(:game_type).and_return(HVH)
+    game = console.create_new_game_from_options(TicTacToe::BoardOptions::THREE_BY_THREE, HVH)
+    expect(console.game_type).to eq(HVH)
   end
 
   it "sets up the game and plays" do
     expect(game_factory_spy).to receive(:create_game).and_return(game_spy)
     expect(game_spy).to receive(:play_turns).and_return(board_spy)
-    console.create_new_game_from_options(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::HVH)
+    console.create_new_game_from_options(TicTacToe::BoardOptions::THREE_BY_THREE, HVH)
     console.play
   end
 
   it "user provides invalid game type" do
-    expect(display_spy).to receive(:ask_player_for_game_type).and_return("9", TicTacToe::GameTypeOptions::HVH)
+    expect(display_spy).to receive(:ask_player_for_game_type).and_return("9", HVH)
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(TicTacToe::BoardOptions::THREE_BY_THREE)
-    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::HVH).and_return(game_spy)
+    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, HVH).and_return(game_spy)
     console.initialize_game
   end
 
   it "user provides invalid board dimension" do
-    expect(display_spy).to receive(:ask_player_for_game_type).and_return(TicTacToe::GameTypeOptions::HVH)
+    expect(display_spy).to receive(:ask_player_for_game_type).and_return(HVH)
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return("5", TicTacToe::BoardOptions::THREE_BY_THREE)
-    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::HVH).and_return(game_spy)
+    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, HVH).and_return(game_spy)
     console.initialize_game
   end
 
-  it "user provides valid game type: #{TicTacToe::GameTypeOptions::HVH} and board size: 3" do
-    expect(display_spy).to receive(:ask_player_for_game_type).and_return(TicTacToe::GameTypeOptions::HVH)
+  it "user provides valid game type: HVH and board size: 3" do
+    expect(display_spy).to receive(:ask_player_for_game_type).and_return(HVH)
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(TicTacToe::BoardOptions::THREE_BY_THREE)
-    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::HVH).and_return(game_spy)
+    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, HVH).and_return(game_spy)
     console.initialize_game
   end
 
-  it "user provides valid game type: #{TicTacToe::GameTypeOptions::BVH} and board size: 3" do
-    expect(display_spy).to receive(:ask_player_for_game_type).and_return(TicTacToe::GameTypeOptions::BVH)
+  it "user provides valid game type: BVH and board size: 3" do
+    expect(display_spy).to receive(:ask_player_for_game_type).and_return(BVH)
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(TicTacToe::BoardOptions::THREE_BY_THREE)
-    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::BVH).and_return(game_spy)
+    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, BVH).and_return(game_spy)
     console.initialize_game
   end
 
-  it "user provides valid game type: #{TicTacToe::GameTypeOptions::HVB} and board size: 3" do
-    expect(display_spy).to receive(:ask_player_for_game_type).and_return(TicTacToe::GameTypeOptions::HVB)
+  it "user provides valid game type: HVB and board size: 3" do
+    expect(display_spy).to receive(:ask_player_for_game_type).and_return(HVB)
     expect(display_spy).to receive(:ask_player_for_board_dimension).and_return(TicTacToe::BoardOptions::THREE_BY_THREE)
-    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, TicTacToe::GameTypeOptions::HVB).and_return(game_spy)
+    expect(game_factory_spy).to receive(:create_game).with(TicTacToe::BoardOptions::THREE_BY_THREE, HVB).and_return(game_spy)
     console.initialize_game
   end
 
@@ -77,7 +80,7 @@ RSpec.describe ConsoleApp do
 
   it "winning game results displayed" do 
     board = TicTacToe::Board.new(3, [[TicTacToe::Mark::X, TicTacToe::Mark::X, TicTacToe::Mark::O], [TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O], [TicTacToe::Mark::O, TicTacToe::Mark::X, 9]])
-    hvh_3x3_game = TicTacToe::Game.new(board, TicTacToe::GameTypeOptions::HVH, display_spy, [player1_spy, player2_spy])
+    hvh_3x3_game = TicTacToe::Game.new(board, HVH, display_spy, [player1_spy, player2_spy])
     expect(game_factory_spy).to receive(:create_game).and_return(hvh_3x3_game)
     console = ConsoleApp.new(game_factory_spy, display_spy) 
     expect(display_spy).to receive(:ask_player_for_game_type).and_return("1")
@@ -91,7 +94,7 @@ RSpec.describe ConsoleApp do
 
   it "draw results displayed" do 
     board = TicTacToe::Board.new(TicTacToe::BoardOptions::THREE_BY_THREE, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X], [TicTacToe::Mark::O, TicTacToe::Mark::O, TicTacToe::Mark::X], [TicTacToe::Mark::X, TicTacToe::Mark::X, TicTacToe::Mark::O]])
-    hvh_3x3_game = TicTacToe::Game.new(board, TicTacToe::GameTypeOptions::HVH, display_spy, [player1_spy, player2_spy])
+    hvh_3x3_game = TicTacToe::Game.new(board, HVH, display_spy, [player1_spy, player2_spy])
     expect(game_factory_spy).to receive(:create_game).and_return(hvh_3x3_game)
     console = ConsoleApp.new(game_factory_spy, display_spy) 
     expect(display_spy).to receive(:ask_player_for_game_type).and_return("1")

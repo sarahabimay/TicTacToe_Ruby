@@ -1,7 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rspec', '3.4.0'
-
-gem 'pry-byebug'
+group :test do
+  gem 'rspec', '3.4.0'
+  gem 'pry-byebug'
+end
 
 gem 'tictactoe'
