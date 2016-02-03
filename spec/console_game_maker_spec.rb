@@ -2,13 +2,14 @@ require "console_game_maker"
 require "stringio"
 
 RSpec.describe ConsoleGameMaker do
+  let(:dimension) { TicTacToe::BoardOptions::DIMENSIONS["THREE_BY_THREE"] }
 
   it "creates a game with 3x3 Board and HVH players" do
     input = StringIO.new
     output = StringIO.new
     console_ui = ConsoleUI.new(input, output)
     game_maker = ConsoleGameMaker.new(TicTacToe::PlayerFactory.new(console_ui), console_ui)
-    game = game_maker.create_game(TicTacToe::BoardOptions::THREE_BY_THREE, HVH)
+    game = game_maker.create_game(dimension, HVH_GAME_TYPE)
     expect(game).to be_a(TicTacToe::Game)
     players = game.players
     expect(players.size).to eq(2)
@@ -22,10 +23,10 @@ RSpec.describe ConsoleGameMaker do
     console_ui_spy = instance_spy(ConsoleUI)
     expect(console_ui_spy).to receive(:ask_player_for_move).and_return(1, 2)
     game_maker = ConsoleGameMaker.new(TicTacToe::PlayerFactory.new(console_ui_spy), console_ui_spy)
-    game = game_maker.create_game(TicTacToe::BoardOptions::THREE_BY_THREE, HVH)
+    game = game_maker.create_game(dimension, HVH_GAME_TYPE)
     players = game.players
     players.each do |player|
-      expect(player[1].get_next_move(TicTacToe::Board.new(TicTacToe::BoardOptions::THREE_BY_THREE))).to be_a(Fixnum)
+      expect(player[1].get_next_move(TicTacToe::Board.new(dimension))).to be_a(Fixnum)
     end
   end
 end

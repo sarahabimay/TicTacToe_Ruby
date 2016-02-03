@@ -15,6 +15,7 @@ RSpec.describe ConsoleUI do
   HVB_OPTION = "Human Vs Easy AI"
   BVH_OPTION = "Easy AI Vs Human"
 
+  let(:dimension) { TicTacToe::BoardOptions::DIMENSIONS["THREE_BY_THREE"] }
   let(:output) { StringIO.new }
   let(:console_ui) { ConsoleUI.new(StringIO.new("1"), output) }
 
@@ -91,13 +92,13 @@ RSpec.describe ConsoleUI do
   end
 
   it "displays TTT board on the console" do
-    board = TicTacToe::Board.new(TicTacToe::BoardOptions::THREE_BY_THREE, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
+    board = TicTacToe::Board.new(dimension, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
     console_ui.display_board(board)
     expect(output.string).to eq("X|O|X\nX|O|X\nO|X|O\n")
   end
 
   it "formats board" do
-    board = TicTacToe::Board.new(TicTacToe::BoardOptions::THREE_BY_THREE, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
+    board = TicTacToe::Board.new(dimension, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
     results = console_ui.format_board_for_display(board)
     expect(results).to eq("X|O|X\nX|O|X\nO|X|O")
   end

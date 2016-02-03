@@ -45,7 +45,7 @@ class ConsoleApp
   private
 
   def get_valid_game_type
-    type = console_ui.ask_player_for_game_type until TicTacToe::GameTypeOptions.is_valid_id?(type)
+    type = console_ui.ask_player_for_game_type until TicTacToe::GameTypeOptions.is_valid_game_type?(type)
     type
   end
 
@@ -53,7 +53,6 @@ class ConsoleApp
       dimension = console_ui.ask_player_for_board_dimension until TicTacToe::BoardOptions.is_valid_dimension?(dimension)
       dimension
   end
-
 
   def display_result
     console_ui.display_result(@game.get_winning_mark)
