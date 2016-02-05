@@ -11,10 +11,11 @@ RSpec.describe ConsoleUI do
   PLAY_AGAIN_REQUEST = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2)?\n"
   WINNING_ANOUNCEMENT = "We have a winner:"
   DRAW_ANNOUNCEMENT = "The game is a draw!\n"
-  HVH_OPTION = "Human Vs Human (1)"
-  HVB_OPTION = "Human Vs Easy AI (2)"
-  BVH_OPTION = "Easy AI Vs Human (3)"
+  HVH_OPTION = "Human Vs Human"
+  HVB_OPTION = "Human Vs Easy AI"
+  BVH_OPTION = "Easy AI Vs Human"
 
+  let(:dimension) { TicTacToe::BoardOptions::DIMENSIONS["THREE_BY_THREE"] }
   let(:output) { StringIO.new }
   let(:console_ui) { ConsoleUI.new(StringIO.new("1"), output) }
 
@@ -31,7 +32,7 @@ RSpec.describe ConsoleUI do
 
   it "request game type from player" do
     console_ui.ask_player_for_game_type
-    expect(output.string).to eq("#{REQUEST_GAME_TYPE}\n#{HVH_OPTION} ; #{HVB_OPTION} ; #{BVH_OPTION}\n")
+    expect(output.string).to eq("#{REQUEST_GAME_TYPE}\n1 -> #{HVH_OPTION}\n2 -> #{HVB_OPTION}\n3 -> #{BVH_OPTION}\n")
   end
 
   it "request game type from player" do
@@ -91,13 +92,13 @@ RSpec.describe ConsoleUI do
   end
 
   it "displays TTT board on the console" do
-    board = TicTacToe::Board.new(TicTacToe::BoardOptions::THREE_BY_THREE, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
+    board = TicTacToe::Board.new(dimension, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
     console_ui.display_board(board)
     expect(output.string).to eq("X|O|X\nX|O|X\nO|X|O\n")
   end
 
   it "formats board" do
-    board = TicTacToe::Board.new(TicTacToe::BoardOptions::THREE_BY_THREE, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
+    board = TicTacToe::Board.new(dimension, [[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::X, TicTacToe::Mark::O, TicTacToe::Mark::X],[TicTacToe::Mark::O, TicTacToe::Mark::X, TicTacToe::Mark::O]])
     results = console_ui.format_board_for_display(board)
     expect(results).to eq("X|O|X\nX|O|X\nO|X|O")
   end

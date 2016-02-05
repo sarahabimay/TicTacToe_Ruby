@@ -59,6 +59,8 @@ class ConsoleUI
     add_new_line_to_each_row(add_column_divider(formatted))
   end
 
+  private
+
   def format_board_cells(board)
     board.board_cells.flatten.collect.with_index do |cell, index|
       format_cells_for_display(cell, index)
@@ -79,8 +81,6 @@ class ConsoleUI
     end
     cell.to_s
   end
-
-  private
 
   attr_reader :input_stream, :output_stream
 end
