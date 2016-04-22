@@ -12,6 +12,7 @@ GEM
     pry-byebug (3.3.0)
       byebug (~> 8.0)
       pry (~> 0.10)
+    rake (10.5.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -33,6 +34,7 @@ PLATFORMS
 
 DEPENDENCIES
   pry-byebug
+  rake
   rspec (= 3.4.0)
   tictactoe
 
