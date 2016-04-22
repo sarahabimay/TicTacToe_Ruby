@@ -5,4 +5,6 @@ group :test do
   gem 'pry-byebug'
 end
 
+gem 'rake'
+
 gem 'tictactoe'

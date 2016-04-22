@@ -13,7 +13,7 @@ class ConsoleApp
   end
 
   def run
-    play_again_choice = true 
+    play_again_choice = true
     while(play_again_choice) do
       initialize_game
       play
@@ -21,7 +21,7 @@ class ConsoleApp
       play_again_choice = player_wants_to_play_again?
     end
   end
-  
+
   def initialize_game
     game_type_choice = get_valid_game_type
     dimension_choice = get_valid_dimension
@@ -34,8 +34,8 @@ class ConsoleApp
 
   def player_wants_to_play_again?
     choice = console_ui.ask_player_to_play_again until TicTacToe::YN.is_valid_choice?(choice)
-    return true if choice == TicTacToe::YN::Y 
-    return false if choice == TicTacToe::YN::N 
+    return true if choice == TicTacToe::YN::Y
+    return false if choice == TicTacToe::YN::N
   end
 
   def play
